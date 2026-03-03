@@ -76,8 +76,9 @@ public class OptionController : MonoBehaviour
     /// <summary>
     /// 選択が変更されたときの処理。
     /// </summary>
-    private void OnSelectionChanged(int index)
+    private void OnSelectionChanged(int index, int previousIndex)
     {
         _view.SelectButton(index);
+        _view.DeselectButton(previousIndex);
     }
 }

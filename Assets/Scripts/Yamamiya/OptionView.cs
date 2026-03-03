@@ -49,9 +49,9 @@ public class OptionView : MonoBehaviour
     {
         if (_options == null) return;
 
-        foreach (var option in _options)
+        for (int i = 0; i < _options.Length; i++)
         {
-            option.gameObject.SetActive(true);
+            _options[i].gameObject.SetActive(true);
         }
     }
 
@@ -62,9 +62,9 @@ public class OptionView : MonoBehaviour
     {
         if (_options == null) return;
 
-        foreach (var option in _options)
+        for (int i = 0; i < _options.Length; i++)
         {
-            option.gameObject.SetActive(false);
+            _options[i].gameObject.SetActive(false);
         }
     }
 
@@ -78,6 +78,27 @@ public class OptionView : MonoBehaviour
             return;
         }
 
+        if (_options[index].TryGetComponent(out ButtonAnimation animation))
+        {
+            animation.OnSelect();
+        }
         _options[index].Select();
+    }
+
+    /// <summary>
+    /// 選択状態が解除されたボタンを元の状態に戻します。
+    /// </summary>
+    /// <param name="index"></param>
+    public void DeselectButton(int index)
+    {
+        if (_options == null || index < 0 || index >= _options.Length)
+        {
+            return;
+        }
+
+        if (_options[index].TryGetComponent(out ButtonAnimation animation))
+        {
+            animation.OnDeselect();
+        }
     }
 }

@@ -7,10 +7,11 @@ using System;
 public class OptionSelector
 {
     private int _selectedIndex;
+    private int _previousSelectedIndex;
     private readonly int _optionCount;
 
     public int SelectedIndex => _selectedIndex;
-    public Action<int> OnSelectionChanged;
+    public Action<int, int> OnSelectionChanged;
 
     public OptionSelector(int optionCount, int initialIndex = 0)
     {
@@ -29,8 +30,9 @@ public class OptionSelector
             return false;
         }
 
+        _previousSelectedIndex = _selectedIndex;
         _selectedIndex++;
-        OnSelectionChanged?.Invoke(_selectedIndex);
+        OnSelectionChanged?.Invoke(_selectedIndex, _previousSelectedIndex);
         return true;
     }
 
@@ -45,8 +47,9 @@ public class OptionSelector
             return false;
         }
 
+        _previousSelectedIndex = _selectedIndex;
         _selectedIndex--;
-        OnSelectionChanged?.Invoke(_selectedIndex);
+        OnSelectionChanged?.Invoke(_selectedIndex, _previousSelectedIndex);
         return true;
     }
 
@@ -59,7 +62,7 @@ public class OptionSelector
         if (_selectedIndex != newIndex)
         {
             _selectedIndex = newIndex;
-            OnSelectionChanged?.Invoke(_selectedIndex);
+            OnSelectionChanged?.Invoke(_selectedIndex, _previousSelectedIndex);
         }
     }
 }
