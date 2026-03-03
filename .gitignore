@@ -12,6 +12,9 @@
 /[Uu]ser[Ss]ettings/
 *.log
 
+/Assets/GameAssets/
+/Assets/Plugins/
+
 /ProjectSettings/GrainiumSettings.asset
 /ProjectSettings/GrainiumSettings.json
 
