@@ -5,11 +5,13 @@ public class Result : MonoBehaviour
 {
     [Header("リザルト時に表示するImage")]
     [SerializeField] Image[] _resultImage;
+    [SerializeField] Text _resultText;
 
     [Header("スコア表示のText")]
     [SerializeField] Text _selectText;
     [SerializeField] Text _timeText;
-    [SerializeField] Text _tapText;
+    [SerializeField] Text _tapCountText;
+    [SerializeField] Text _tapSpeedText;
 
     [Header("確認用の仮データを入れる所")]
     [SerializeField] bool _useDebugData = true;
@@ -17,6 +19,7 @@ public class Result : MonoBehaviour
     [SerializeField] int _debugSelectData = 2;
     [SerializeField] float _debugTimeData = 0f;
     [SerializeField] float _debugTapData = 10;
+    [SerializeField] float _debugTapSpeedData = 100;
     void Start()
     {
         ShowResult();    
@@ -29,6 +32,7 @@ public class Result : MonoBehaviour
         int _selected; //選択したもの
         float _time; //経過時間
         float _tapCount; //連打数
+        float _tapSpeed; //連打速度
 
         if (_useDebugData)
         {
@@ -36,6 +40,7 @@ public class Result : MonoBehaviour
             _selected = _debugSelectData;
             _time = _debugTimeData;
             _tapCount = _debugTapData;
+            _tapSpeed = _debugTapSpeedData;
         }
         else
         {
@@ -44,6 +49,16 @@ public class Result : MonoBehaviour
             _selected = 0;
             _time = 0;
             _tapCount = 0;
+            _tapSpeed = 0;
+        }
+
+        if (_isClear)
+        {
+            _resultText.text = "完・全・押・付";
+        }
+        else
+        {
+            _resultText.text = "妥・協";
         }
 
         if (_resultImage != null && _resultImage.Length > 0)
@@ -72,7 +87,9 @@ public class Result : MonoBehaviour
 
         _selectText.text = "セレクト:" + _selected;
         _timeText.text = "タイム:" + _time;
-        _tapText.text = "連打数:" + _tapCount;
+        _tapCountText.text = "連打数:" + _tapCount;
+        _tapSpeedText.text ="連打速度" + _tapSpeed;
+
 
         Debug.Log($"セレクト: {_selected}");
         Debug.Log($"タイム: {_time}");
