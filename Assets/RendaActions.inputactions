@@ -1,0 +1,75 @@
+{
+    "version": 1,
+    "name": "RendaActions",
+    "maps": [
+        {
+            "name": "RendaMap",
+            "id": "6986a6f6-3d69-4930-9a36-2003feed3b89",
+            "actions": [
+                {
+                    "name": "RendaPress1",
+                    "type": "Button",
+                    "id": "1dabcc69-3238-4090-a263-13aea17afefb",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RendaPress2",
+                    "type": "Button",
+                    "id": "9d0e67f6-f6e2-42a6-956e-d0fc0f581298",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Debug_StartRenda",
+                    "type": "Button",
+                    "id": "3cad9b2b-d348-40fa-b917-06e79bafbbcf",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "123ae8cd-220d-4895-bf69-5b4870f118f7",
+                    "path": "<Keyboard>/j",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RendaPress1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0f0d7be7-30f7-4478-a5e4-3568fbe2b319",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RendaPress2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a92948ed-8944-419b-be2b-d7bd350f3501",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Debug_StartRenda",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
