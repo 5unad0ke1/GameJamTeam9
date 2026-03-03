@@ -8,13 +8,10 @@ using System.Collections.Generic;
 public class SimpleScenarioManager : MonoBehaviour
 {
     [SerializeField] private ScenarioLine[] _scenarioLines;
-    [SerializeField] private OptionController _optionController;
 
     [SerializeField,Tooltip("表示名")] private TextMeshProUGUI _NameText;
     [SerializeField,Tooltip("表示テキスト")] private TextMeshProUGUI _lineText;
     [SerializeField,Tooltip("背景イメージ")] private Image _lineImage;
-
-    [SerializeField] private GameObject _scenarioPanel;
 
     [Header("テキストアニメーションの設定")]
     [SerializeField,Tooltip("セリフを言い終わる時間")] private float _textAnimationDuration = 1.5f;
@@ -72,8 +69,8 @@ public class SimpleScenarioManager : MonoBehaviour
     {
         _lineText.text = "";
         _isAnimatingText = true;
-        _textAnimationHandler = LMotion.String.Create128Bytes("", text, _textAnimationDuration)
-            .WithRichText()
+
+        LMotion.String.Create128Bytes(_lineText.text, text, _textAnimationDuration)
             .WithEase(Ease.Linear)
             .BindToText(_lineText)
             .AddTo(this);
@@ -89,13 +86,6 @@ public class SimpleScenarioManager : MonoBehaviour
         {
             _currentLineIndex++;
             ShowLine();
-        }
-        else
-        {
-            // シナリオの最後の行に到達した場合、選択肢を表示する
-            _optionController.ActivateOptionPanel();
-            _optionController.ActivateOptions();
-            _scenarioPanel.SetActive(false);
         }
     }
 
