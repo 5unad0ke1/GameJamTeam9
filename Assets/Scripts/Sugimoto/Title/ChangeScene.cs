@@ -1,25 +1,28 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ChangeScene : MonoBehaviour
+namespace Sugimoto.Title
 {
-    [SerializeField] private string _sceneName;
-
-    private void Update()
+    public class ChangeScene : MonoBehaviour
     {
-        if (Keyboard.current.anyKey.wasPressedThisFrame)
+        [SerializeField] private string _sceneName;
+
+        private void Update()
         {
-            // すべてのキーコードをチェックして、押されたキーをログに出力
-            if (Input.anyKeyDown)
+            if (Keyboard.current.anyKey.wasPressedThisFrame)
             {
-                Debug.Log($"押されたキー{Input.inputString}");
-                ChangeSceneTo(_sceneName);
+                // すべてのキーコードをチェックして、押されたキーをログに出力
+                if (Input.anyKeyDown)
+                {
+                    Debug.Log($"押されたキー{Input.inputString}");
+                    ChangeSceneTo(_sceneName);
+                }
             }
         }
-    }
 
-    public void ChangeSceneTo(string sceneName)
-    {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+        public void ChangeSceneTo(string sceneName)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+        }
     }
 }
