@@ -70,7 +70,8 @@ public class SimpleScenarioManager : MonoBehaviour
         _lineText.text = "";
         _isAnimatingText = true;
 
-        LMotion.String.Create128Bytes(_lineText.text, text, _textAnimationDuration)
+        // テキストアニメーションを作成して、テキストにバインドする
+        _textAnimationHandler = LMotion.String.Create128Bytes(_lineText.text, text, _textAnimationDuration)
             .WithEase(Ease.Linear)
             .BindToText(_lineText)
             .AddTo(this);
@@ -105,6 +106,7 @@ public class SimpleScenarioManager : MonoBehaviour
 
         if (_shakeCharIndices.Count == 0) return;
 
+        //5fの範囲で上下に揺らすアニメーションを作成して、揺らす文字の頂点にバインドする
         _shakeHandle = LMotion.Create(-5f, 5f, 0.5f)
             .WithEase(Ease.InOutSine)
             .WithLoops(-1, LoopType.Yoyo)
@@ -136,17 +138,16 @@ public class SimpleScenarioManager : MonoBehaviour
 
         foreach (var word in _ShakeWords)
         {
-            string target = word.ToUpper();
             int startIndex = 0;
 
-            while ((startIndex = fullText.IndexOf(target, startIndex)) != -1)
+            while ((startIndex = fullText.IndexOf(word, startIndex, System.StringComparison.OrdinalIgnoreCase)) != -1)
             {
-                for (int i = 0; i < target.Length; i++)
+                for (int i = 0; i < word.Length; i++)
                 {
                     _shakeCharIndices.Add(startIndex + i);
                 }
 
-                startIndex += target.Length;
+                startIndex += word.Length;
             }
         }
     }
