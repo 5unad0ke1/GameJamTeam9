@@ -1,2 +1,5 @@
 ﻿<Solution>
+  <Project Path="DOTween.Modules.csproj" />
+  <Project Path="DOTweenPro.EditorScripts.csproj" />
+  <Project Path="DOTweenPro.Scripts.csproj" />
 </Solution>
