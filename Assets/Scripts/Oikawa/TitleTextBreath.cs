@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TitleTextBreath : MonoBehaviour
+public sealed class TitleTextBreath : MonoBehaviour
 {
 
     void Start()
