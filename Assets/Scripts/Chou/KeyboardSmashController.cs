@@ -4,12 +4,12 @@ using UnityEngine.InputSystem;
 
 public class KeyboardSmashController : MonoBehaviour
 {
-    [SerializeField, Range(0f, 0.1f), Tooltip("キーボード叩きの受付時間（秒）")]
-    private float _smashWindow = 0.05f;
+    [SerializeField, Range(0f, 5f), Tooltip("キーボード叩きの受付時間（秒）")]
+    private float _smashWindow = 2f;
     [SerializeField, Tooltip("スコア倍率最大上昇値")]
     private float _scoreScaleMax = 0.5f;
     [SerializeField, Tooltip("最大倍率に必要な押下数")]
-    private int _smashCountForMaxScale = 30;
+    private int _smashCountForMaxScale = 300;
 
     private SmashKeyboardActions _smashInput;
     private bool _smashFlg = false;
@@ -55,6 +55,7 @@ public class KeyboardSmashController : MonoBehaviour
             Invoke(nameof(CloseSmashWindow), _smashWindow);
         }
         _smashCount++;
+        OnSmashed?.Invoke();
     }
 
     #region Privateメソッド
@@ -63,6 +64,7 @@ public class KeyboardSmashController : MonoBehaviour
     /// </summary>
     private void CalcSmashScoreRate()
     {
+        Debug.Log("SmashCount: " + _smashCount.ToString());
         int keyCount = _smashCount > _smashCountForMaxScale ? _smashCountForMaxScale : _smashCount;
         _smashScoreRate = 1 + _scoreScaleMax * keyCount / _smashCountForMaxScale;
     }

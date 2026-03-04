@@ -64,6 +64,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9171556c86e7bc64b90ccd12cff8bdd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KeyboardSmashManager
-  _smashWindow: 0.05
+  _smashWindow: 2
   _scoreScaleMax: 0.5
-  _smashCountForMaxScale: 30
+  _smashCountForMaxScale: 300

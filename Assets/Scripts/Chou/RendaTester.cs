@@ -65,6 +65,10 @@ public class RendaTester : MonoBehaviour
     private float _oppScaleMin = 0.3f;
     [SerializeField, Tooltip("相手画像最大拡大倍率")]
     private float _oppScaleMax = 1.3f;
+    [SerializeField, Tooltip("キーボードチャタリング指示Pulse倍率")]
+    private float _imgSmashPulseScale = 1.3f;
+    [SerializeField, Tooltip("キーボードチャタリング指示縮小倍率")]
+    private float _imgSmashZoomOutScale = 0.95f;
 
     private bool _started = false;
     private bool _smashFlg = false;
@@ -79,6 +83,8 @@ public class RendaTester : MonoBehaviour
         // 連打フェーズ終了時の処理を連打システムのデリゲートに登録する。例えばUI変化や演出など
         _rendaController.OnRendaEnd += OnRendaEnd;
 
+        // キーボード叩きで1ボタン押下時の処理をキーボード叩きシステムのデリゲートに登録する
+        _smashController.OnSmashed += OnSmashed;
         // キーボード叩きの受付が終わった時の処理をキーボード叩きシステムのデリゲートに登録する
         _smashController.OnSmashFinished += OnKeyboardSmashFinished;
 
@@ -87,6 +93,14 @@ public class RendaTester : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (_imgSmashKeyboard.gameObject.activeInHierarchy)
+        {
+            Vector2 imgScale = _imgSmashKeyboard.rectTransform.localScale;
+            if(imgScale.x > 1f)
+            {
+                _imgSmashKeyboard.rectTransform.localScale *= _imgSmashZoomOutScale;
+            }
+        }
         if (!_started) return;
         UpdateUi();
         UpdateImageScale();
@@ -127,6 +141,11 @@ public class RendaTester : MonoBehaviour
     {
         float scaleValue = _rendaController.VsValue / _rendaController.VsValueMax;
         return _oppScaleMax - (_oppScaleMax - _oppScaleMin) * scaleValue;
+    }
+
+    private void OnSmashed()
+    {
+        _imgSmashKeyboard.rectTransform.localScale = Vector2.one * _imgSmashPulseScale;
     }
 
     private void OnTurnSwitch()
