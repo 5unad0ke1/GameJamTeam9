@@ -24,6 +24,14 @@ public class MadCutIn : MonoBehaviour
     private void Awake()
     {
         _scenarioManager.OnFuncTriggerd += PlayAnimation;
+
+        var scale = _backgroundT.localScale;
+        scale.y = 0;
+        _backgroundT.localScale = scale;
+        foreach (var item in _textT)
+        {
+            item.localScale = Vector3.zero;
+        }
     }
     private void OnDestroy()
     {
