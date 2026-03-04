@@ -101,4 +101,18 @@ public class OptionView : MonoBehaviour
             animation.OnDeselect();
         }
     }
+
+    /// <summary>
+    /// 指定されたインデックスのボタンを取得します。
+    /// </summary>
+    /// <param name="index"></param>
+    /// <returns>Indexが範囲外の場合はnullを返します。</returns>
+    public Button GetButton(int index)
+    {
+        if (_options == null || index < 0 || index >= _options.Length)
+        {
+            return null;
+        }
+        return _options[index];
+    }
 }
