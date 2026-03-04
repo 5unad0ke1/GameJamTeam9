@@ -99,6 +99,7 @@ public sealed class IntroWindowAnimation : MonoBehaviour
 
             .Run();
         _handle.Time = 0f;
+        await _handle;
     }
     private MotionHandle _handle;
 }
