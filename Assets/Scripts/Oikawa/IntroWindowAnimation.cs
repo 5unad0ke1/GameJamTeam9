@@ -46,7 +46,7 @@ public sealed class IntroWindowAnimation : MonoBehaviour
     private void Awake()
     {
         _scenarioManager.enabled = false;
-        _scenarioManager.OnFuncTriggerd += PlayExteriorToInterior;
+        _scenarioManager.OnFuncTriggerd.Add(PlayExteriorToInterior);
     }
     private void Start()
     {
@@ -55,7 +55,7 @@ public sealed class IntroWindowAnimation : MonoBehaviour
     private void OnDestroy()
     {
         _handle.TryCancel();
-        _scenarioManager.OnFuncTriggerd -= PlayExteriorToInterior;
+        _scenarioManager.OnFuncTriggerd.Remove(PlayExteriorToInterior);
     }
 
     private async UniTask PlayIntro()
