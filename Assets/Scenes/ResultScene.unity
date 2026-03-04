@@ -465,7 +465,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1195549854
 RectTransform:
   m_ObjectHideFlags: 0
@@ -917,14 +917,14 @@ MonoBehaviour:
   _clearMessageSpeed: 5
   _gameOverMessageSpeed: 1
   _resultText: {fileID: 1163834321}
-  _selectText: {fileID: 1801672987}
-  _timeText: {fileID: 359944712}
+  _scoreText: {fileID: 1801672987}
+  _rankText: {fileID: 359944712}
   _tapCountText: {fileID: 758723557}
   _tapSpeedText: {fileID: 1225269613}
   _useDebugData: 1
   _debugData: 1
-  _debugSelectData: 2
-  _debugTimeData: 0
+  _debugScoreData: 2
+  _debugRankData: A
   _debugTapData: 10
   _debugTapSpeedData: 100
 --- !u!1 &2099024001
