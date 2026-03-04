@@ -1,5 +1,4 @@
 using UnityEngine;
-using static SimpleScenarioManager;
 
 [System.Serializable]
 public class ScenarioLine

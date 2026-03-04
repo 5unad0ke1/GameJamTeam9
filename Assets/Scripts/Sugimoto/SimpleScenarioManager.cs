@@ -38,21 +38,6 @@ public class SimpleScenarioManager : MonoBehaviour
     public Action<ActionType> OnActionTriggered;
     public Func<ActionType, UniTask> OnFuncTriggerd;
 
-    public void ShowLine()
-    {
-        if (_currentLineIndex >= _scenarioLines.Length) return;
-
-        _NameText.text = _scenarioLines[_currentLineIndex].characterName;
-
-        string text = _scenarioLines[_currentLineIndex].lineText;
-
-        foreach (var word in _upperCaseWords)
-            text = text.Replace(word, word.ToUpper());
-
-
-
-        TextAnimation(text, _scenarioLines[_currentLineIndex].isActionExecuted, _scenarioLines[_currentLineIndex].isFuncExecuted).Forget();
-    }
 
     private void Start()
     {
@@ -77,7 +62,23 @@ public class SimpleScenarioManager : MonoBehaviour
         }
     }
 
-    private async UniTask PlayEffect(ActionType type)
+    public void ShowLine()
+    {
+        if (_currentLineIndex >= _scenarioLines.Length) return;
+
+        _NameText.text = _scenarioLines[_currentLineIndex].characterName;
+
+        string text = _scenarioLines[_currentLineIndex].lineText;
+
+        foreach (var word in _upperCaseWords)
+            text = text.Replace(word, word.ToUpper());
+
+
+
+        TextAnimation(text, _scenarioLines[_currentLineIndex].isActionExecuted, _scenarioLines[_currentLineIndex].isFuncExecuted).Forget();
+    }
+
+    public async UniTask PlayEffect(ActionType type)
     {
         if (type != ActionType.none)
             return;
