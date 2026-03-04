@@ -6,31 +6,27 @@ public class ChangeScene : MonoBehaviour
     [SerializeField]string _titleScene;
     [SerializeField] float _countdownTime = 3f;
     float _timer;
-    bool _isCounting = false;
     private void Update()
     {
-        if (Input.anyKeyDown && !_isCounting)
+        if (Input.anyKey)
         {
-            _isCounting = true;
-            _timer = _countdownTime;
-        }
-        if (_isCounting)
-        {
-            _timer -= Time.deltaTime;
+            _timer += Time.deltaTime;
             Debug.Log(_timer);
-            if(_timer <= 0)
+            if (_timer >= _countdownTime)
             {
                 if (!string.IsNullOrEmpty(_titleScene))
                 {
-                    _isCounting = false;
                     SceneManager.LoadScene(_titleScene);
                 }
                 else
                 {
                     Debug.LogError("titleScene が設定されていません！");
                 }
-                
             }
+        }
+        else
+        {
+            _timer = 0;
         }
     }
 }
