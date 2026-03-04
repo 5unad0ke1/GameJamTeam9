@@ -35,7 +35,7 @@ public class SimpleScenarioManager : MonoBehaviour
 
     //セリフのアクション
     public Action<ActionType> OnActionTriggered;
-    public List<Func<ActionType, UniTask>> OnFuncTriggerd;
+    public List<Func<ActionType, UniTask>> OnFuncTriggerd = new();
 
 
     private void Start()
