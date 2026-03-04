@@ -117,7 +117,7 @@ Transform:
   m_GameObject: {fileID: 1606581516617857120}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 5, z: 0}
+  m_LocalPosition: {x: -1.1299999, y: 4.85, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -208,7 +208,7 @@ Transform:
   m_GameObject: {fileID: 1626523373037571486}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 5, z: 0}
+  m_LocalPosition: {x: -1.1299999, y: 4.85, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -299,7 +299,7 @@ Transform:
   m_GameObject: {fileID: 1929089374719472682}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 5, z: 0}
+  m_LocalPosition: {x: -1.13, y: 4.85, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -606,9 +606,9 @@ Transform:
   m_GameObject: {fileID: 4110493721797610531}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.58, y: -7.55, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 5.58, y: -10.39, z: 0}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7875542352894680631}
   - {fileID: 3880271092703042292}
@@ -629,8 +629,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72619cb7108c0694a9e6aee0a616d3cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DumpAnimation
-  _boundSize: {x: 1, y: 0.97, z: 1}
-  _defalutSize: {x: 1, y: 1, z: 1}
+  _boundSize: {x: 1.3, y: 1.25, z: 1.3}
+  _defalutSize: {x: 1.3, y: 1.3, z: 1.3}
 --- !u!114 &490953134576988301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -668,7 +668,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &472079611110410938
 Transform:
   m_ObjectHideFlags: 0
@@ -759,7 +759,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7875542352894680631
 Transform:
   m_ObjectHideFlags: 0
@@ -1134,9 +1134,9 @@ Transform:
   m_GameObject: {fileID: 7835841336455542105}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.58, y: -7.55, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -4.56, y: -9.89, z: 0}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7289145237478363824}
   - {fileID: 614178718142772220}
@@ -1160,8 +1160,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72619cb7108c0694a9e6aee0a616d3cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DumpAnimation
-  _boundSize: {x: 1, y: 0.97, z: 1}
-  _defalutSize: {x: 1, y: 1, z: 1}
+  _boundSize: {x: 1.3, y: 1.25, z: 1.3}
+  _defalutSize: {x: 1.3, y: 1.3, z: 1.3}
 --- !u!114 &3772107151748915621
 MonoBehaviour:
   m_ObjectHideFlags: 0
