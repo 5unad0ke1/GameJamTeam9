@@ -4,6 +4,10 @@ using LitMotion.Extensions;
 using Unity.VisualScripting;
 using UnityEngine;
 
+/// <summary>
+/// Start時に外から部屋の窓を映すようにフェードインし、
+/// SimpleScenarioManagerのFunc実行によって外観から内装へのアニメーションを再生
+/// </summary>
 public sealed class IntroWindowAnimation : MonoBehaviour
 {
     [Tooltip("シナリオマネージャー(Action/Funcの登録 enabled管理)")]
