@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "name": "SmashKeyboardActions",
+    "maps": [
+        {
+            "name": "SmashMap",
+            "id": "80bd2864-b17c-4bf4-a2be-7aa83b35b5b7",
+            "actions": [
+                {
+                    "name": "Smash",
+                    "type": "PassThrough",
+                    "id": "1a19b903-b41e-45c6-9028-f60180d2b7b3",
+                    "expectedControlType": "Key",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "fdd1ce32-2db8-4995-b948-d14c65c1ef5a",
+                    "path": "<Keyboard>/*",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Smash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
