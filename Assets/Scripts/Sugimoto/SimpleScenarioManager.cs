@@ -4,32 +4,60 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System;
+using Cysharp.Threading.Tasks;
+using System.Threading.Tasks;
 
 public class SimpleScenarioManager : MonoBehaviour
 {
     [SerializeField] private ScenarioLine[] _scenarioLines;
 
-    [SerializeField,Tooltip("表示名")] private TextMeshProUGUI _NameText;
-    [SerializeField,Tooltip("表示テキスト")] private TextMeshProUGUI _lineText;
-    [SerializeField,Tooltip("背景イメージ")] private Image _lineImage;
+    [SerializeField, Tooltip("表示名")] private TextMeshProUGUI _NameText;
+    [SerializeField, Tooltip("表示テキスト")] private TextMeshProUGUI _lineText;
+    [SerializeField, Tooltip("背景イメージ")] private Image _lineImage;
 
     [Header("テキストアニメーションの設定")]
-    [SerializeField,Tooltip("セリフを言い終わる時間")] private float _textAnimationDuration = 1.5f;
-    [SerializeField,Tooltip("大文字にする文字のキーワード")] private string[] _upperCaseWords;
-    [SerializeField,Tooltip("揺らす文字を入れる配列")] private string[] _ShakeWords;
+    [SerializeField, Tooltip("セリフを言い終わる時間")] private float _textAnimationDuration = 1.5f;
+    [SerializeField, Tooltip("大文字にする文字のキーワード")] private string[] _upperCaseWords;
+    [SerializeField, Tooltip("揺らす文字を入れる配列")] private string[] _ShakeWords;
+
+    [Header("アクションの設定")]
+    [Min(1)]
+    [SerializeField] private int WaitingTime;
 
     private int _currentLineIndex = 0;
     private bool _isAnimatingText = false;
+    private bool _isCanSkip = false;
     private MotionHandle _textAnimationHandler;
     private MotionHandle _shakeHandle;
-
     private Vector3[][] _originalVertices;
     private TMP_TextInfo _cachedTextInfo;
     private List<int> _shakeCharIndices = new();
 
+    //セリフのアクション
+    public Action<ActionType> OnActionTriggered;
+    public Func<ActionType, UniTask> OnFuncTriggerd;
+
+    public void ShowLine()
+    {
+        if (_currentLineIndex >= _scenarioLines.Length) return;
+
+        _NameText.text = _scenarioLines[_currentLineIndex].characterName;
+
+        string text = _scenarioLines[_currentLineIndex].lineText;
+
+        foreach (var word in _upperCaseWords)
+            text = text.Replace(word, word.ToUpper());
+
+
+
+        TextAnimation(text, _scenarioLines[_currentLineIndex].isActionExecuted, _scenarioLines[_currentLineIndex].isFuncExecuted).Forget();
+    }
+
     private void Start()
     {
         ShowLine();
+
     }
 
     private void Update()
@@ -44,28 +72,21 @@ public class SimpleScenarioManager : MonoBehaviour
         {
             if (_isAnimatingText)
                 SkipTextAnimation();
-            else
+            else if (_isCanSkip)
                 NextLine();
         }
     }
 
-    
-    public void ShowLine()
+    private async UniTask PlayEffect(ActionType type)
     {
-        if (_currentLineIndex >= _scenarioLines.Length) return;
+        if (type != ActionType.none)
+            return;
 
-        _NameText.text = _scenarioLines[_currentLineIndex].characterName;
-
-        string text = _scenarioLines[_currentLineIndex].lineText;
-
-        foreach (var word in _upperCaseWords)
-            text = text.Replace(word, word.ToUpper());
-
-        TextAnimation(text);
+        await UniTask.Delay(WaitingTime);
     }
 
     // テキストを1文字ずつ表示するアニメーション
-    private void TextAnimation(string text)
+    private async UniTask TextAnimation(string text, bool action, bool func)
     {
         _lineText.text = "";
         _isAnimatingText = true;
@@ -75,11 +96,29 @@ public class SimpleScenarioManager : MonoBehaviour
             .WithEase(Ease.Linear)
             .BindToText(_lineText)
             .AddTo(this);
+
+        if (action)
+        {
+            OnActionTriggered?.Invoke(_scenarioLines[_currentLineIndex].actionType);
+        }
+
+        if (func)
+        {
+            _isCanSkip = false;
+
+            if (OnFuncTriggerd != null)
+                await OnFuncTriggerd.Invoke(_scenarioLines[_currentLineIndex].actionType);
+
+        }
+
+        _isCanSkip = true;
     }
 
     // 次の行に進む
     private void NextLine()
     {
+
+
         _shakeHandle.TryComplete();
         _shakeCharIndices.Clear();
 
