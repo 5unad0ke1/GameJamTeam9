@@ -13,11 +13,11 @@ public class Result : MonoBehaviour
     [SerializeField] float _gameOverMessageSpeed = 1f;
     [SerializeField] Text _resultText;
 
-    [Header("スコア表示のText")]
-    [SerializeField] Text _scoreText;
-    [SerializeField] Text _rankText;
-    [SerializeField] Text _tapCountText;
-    [SerializeField] Text _tapSpeedText;
+    [Header("スコア表示のText (MeshPro用)")]
+    [SerializeField] TMP_Text _scoreTmpText;
+    [SerializeField] TMP_Text _rankTmpText;
+    [SerializeField] TMP_Text _tapCountTmpText;
+    [SerializeField] TMP_Text _tapSpeedTmpText;
 
     [Header("リザルトメッセージで流す効果音")]
     [SerializeField] AudioSource _MessageSourco;
@@ -103,10 +103,10 @@ public class Result : MonoBehaviour
             Debug.Log("Result Image 未設定（デバッグモード動作中）");
         }
 
-        _scoreText.text = "スコア:" + _score;
-        _rankText.text = "ランク:" + _rank;
-        _tapCountText.text = "連打数:" + _tapCount;
-        _tapSpeedText.text ="連打速度" + _tapSpeed;
+        _scoreTmpText.text = "スコア:" + _score;
+        _rankTmpText.text = "ランク:" + _rank;
+        _tapCountTmpText.text = "連打数:" + _tapCount;
+        _tapSpeedTmpText.text = "連打速度" + _tapSpeed;
 
 
         Debug.Log($"スコア: {_score}");
@@ -126,21 +126,15 @@ public class Result : MonoBehaviour
         LMotion.String.Create64Bytes(string.Empty, message, _clearMessageSpeed)
        .Bind(text =>
        {
-           string currentText = text.ToString();
-           // 文字表示
-           _tmpText.text = currentText;
+           int currentLength = text.Length;
 
-           // 文字が増えた瞬間だけ音を鳴らす
-           if (text.Length > previousLength)
+           if (currentLength > previousLength)
            {
-               if (_MessageSourco != null && _MessageSE != null)
-               {
-                   Debug.Log("音を鳴らすタイミング！");
-                   _MessageSourco.PlayOneShot(_MessageSE);
-               }
-
-               previousLength = text.Length;
+               _MessageSourco.PlayOneShot(_MessageSE);
+               previousLength = currentLength;
            }
+
+           _tmpText.text = text.ToString();
        });
         return;
     }
@@ -157,21 +151,15 @@ public class Result : MonoBehaviour
         LMotion.String.Create64Bytes(string.Empty, message, _gameOverMessageSpeed)
         .Bind(text =>
         {
-            string currentText = text.ToString();
-            // 文字表示
-            _tmpText.text = currentText;
+            int currentLength = text.Length;
 
-            // 文字が増えた瞬間だけ音を鳴らす
-            if (text.Length > previousLength)
+            if (currentLength > previousLength)
             {
-                if (_MessageSourco != null && _MessageSE != null)
-                {
-                    Debug.Log("音を鳴らすタイミング！");
-                    _MessageSourco.PlayOneShot(_MessageSE);
-                }
-
-                previousLength = text.Length;
+                _MessageSourco.PlayOneShot(_MessageSE);
+                previousLength = currentLength;
             }
+
+            _tmpText.text = text.ToString();
         });
         return;
     }
