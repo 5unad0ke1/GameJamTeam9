@@ -1,3 +1,7 @@
+using LitMotion;
+using LitMotion.Adapters;
+using LitMotion.Extensions;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,6 +9,9 @@ public class Result : MonoBehaviour
 {
     [Header("リザルト時に表示するImage")]
     [SerializeField] Image[] _resultImage;
+    [SerializeField] private TMP_Text _tmpText;
+    [SerializeField] float _clearMessageSpeed = 1f;
+    [SerializeField] float _gameOverMessageSpeed = 1f;
     [SerializeField] Text _resultText;
 
     [Header("スコア表示のText")]
@@ -20,9 +27,12 @@ public class Result : MonoBehaviour
     [SerializeField] float _debugTimeData = 0f;
     [SerializeField] float _debugTapData = 10;
     [SerializeField] float _debugTapSpeedData = 100;
+
+   
+
     void Start()
     {
-        ShowResult();    
+        ShowResult();
     }
 
     void ShowResult()
@@ -52,14 +62,19 @@ public class Result : MonoBehaviour
             _tapSpeed = 0;
         }
 
+       
+        string message = _isClear ? "完全押付" : "妥協";
+
+        //アニメーション再生
         if (_isClear)
         {
-            _resultText.text = "完・全・押・付";
+            ClearAnimText(message);
         }
         else
         {
-            _resultText.text = "妥・協";
+            GameOverAnimText(message);
         }
+
 
         if (_resultImage != null && _resultImage.Length > 0)
         {
@@ -94,5 +109,28 @@ public class Result : MonoBehaviour
         Debug.Log($"セレクト: {_selected}");
         Debug.Log($"タイム: {_time}");
         Debug.Log($"連打数: {_tapCount}");
+    }
+
+    void ClearAnimText(string message)
+    {
+        _resultText.text = "";
+        _resultText.alignment = TextAnchor.MiddleLeft;
+        _tmpText.alignment = TextAlignmentOptions.Left;
+        int _length = message.Length;
+
+        LMotion.String.Create64Bytes(string.Empty, message, _clearMessageSpeed)
+            .BindToText(_tmpText);
+        return;
+    }
+
+    void GameOverAnimText(string message)
+    {
+        _resultText.text = "";
+        _tmpText.alignment = TextAlignmentOptions.Center;
+        int _length = message.Length;
+
+        LMotion.String.Create64Bytes(string.Empty, message, _gameOverMessageSpeed)
+            .BindToText(_tmpText);
+        return;
     }
 }
