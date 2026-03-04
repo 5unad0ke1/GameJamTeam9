@@ -82,5 +82,6 @@ public class MadCutIn : MonoBehaviour
             .Join(textHandle)
             .Run();
         _handle.Time = 0f;
+        await _handle;
     }
 }
