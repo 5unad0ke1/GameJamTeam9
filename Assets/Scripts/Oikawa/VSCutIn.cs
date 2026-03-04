@@ -33,7 +33,9 @@ public sealed class VSCutIn : MonoBehaviour
     [SerializeField] private AudioClip _ironSmashClip;
 
     public async UniTask PlayAnimationAsync()
-        => PlayAnimation(false);
+    {
+        await PlayAnimation(false);
+    }
     public void PlayAnimation()
         => PlayAnimation(false).Forget();
 
