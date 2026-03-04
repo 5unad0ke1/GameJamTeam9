@@ -1,12 +1,11 @@
+using Cysharp.Threading.Tasks;
 using LitMotion;
 using LitMotion.Extensions;
+using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
-using System;
-using Cysharp.Threading.Tasks;
-using System.Threading.Tasks;
 
 public class SimpleScenarioManager : MonoBehaviour
 {
@@ -36,7 +35,7 @@ public class SimpleScenarioManager : MonoBehaviour
 
     //セリフのアクション
     public Action<ActionType> OnActionTriggered;
-    public Func<ActionType, UniTask> OnFuncTriggerd;
+    public List<Func<ActionType, UniTask>> OnFuncTriggerd;
 
 
     private void Start()
@@ -107,8 +106,12 @@ public class SimpleScenarioManager : MonoBehaviour
         {
             _isCanSkip = false;
 
-            if (OnFuncTriggerd != null)
-                await OnFuncTriggerd.Invoke(_scenarioLines[_currentLineIndex].actionType);
+            foreach (var item in OnFuncTriggerd)
+            {
+                if (item == null)
+                    continue;
+                await item(_scenarioLines[_currentLineIndex].actionType);
+            }
 
         }
 

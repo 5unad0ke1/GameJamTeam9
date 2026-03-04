@@ -23,7 +23,7 @@ public class MadCutIn : MonoBehaviour
         => PlayAnimation(_actionType).Forget();
     private void Awake()
     {
-        _scenarioManager.OnFuncTriggerd += PlayAnimation;
+        _scenarioManager.OnFuncTriggerd.Add(PlayAnimation);
 
         var scale = _backgroundT.localScale;
         scale.y = 0;
