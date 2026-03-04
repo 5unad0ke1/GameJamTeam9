@@ -1,5 +1,4 @@
 using LitMotion;
-using LitMotion.Adapters;
 using LitMotion.Extensions;
 using TMPro;
 using UnityEngine;
@@ -19,6 +18,10 @@ public class Result : MonoBehaviour
     [SerializeField] Text _rankText;
     [SerializeField] Text _tapCountText;
     [SerializeField] Text _tapSpeedText;
+
+    [Header("リザルトメッセージで流す効果音")]
+    [SerializeField] AudioSource _MessageSourco;
+    [SerializeField] AudioClip _MessageSE;
 
     [Header("確認用の仮データを入れる所")]
     [SerializeField] bool _useDebugData = true;
@@ -117,9 +120,28 @@ public class Result : MonoBehaviour
         _resultText.alignment = TextAnchor.MiddleLeft;
         _tmpText.alignment = TextAlignmentOptions.Left;
         int _length = message.Length;
-
+        int previousLength = 0;
+        //LMotion.String.Create64Bytes(string.Empty, message, _clearMessageSpeed)
+        //    .BindToText(_tmpText);
         LMotion.String.Create64Bytes(string.Empty, message, _clearMessageSpeed)
-            .BindToText(_tmpText);
+       .Bind(text =>
+       {
+           string currentText = text.ToString();
+           // 文字表示
+           _tmpText.text = currentText;
+
+           // 文字が増えた瞬間だけ音を鳴らす
+           if (text.Length > previousLength)
+           {
+               if (_MessageSourco != null && _MessageSE != null)
+               {
+                   Debug.Log("音を鳴らすタイミング！");
+                   _MessageSourco.PlayOneShot(_MessageSE);
+               }
+
+               previousLength = text.Length;
+           }
+       });
         return;
     }
 
@@ -128,9 +150,29 @@ public class Result : MonoBehaviour
         _resultText.text = "";
         _tmpText.alignment = TextAlignmentOptions.Center;
         int _length = message.Length;
+        int previousLength = 0;
 
+        //LMotion.String.Create64Bytes(string.Empty, message, _gameOverMessageSpeed)
+        //    .BindToText(_tmpText);
         LMotion.String.Create64Bytes(string.Empty, message, _gameOverMessageSpeed)
-            .BindToText(_tmpText);
+        .Bind(text =>
+        {
+            string currentText = text.ToString();
+            // 文字表示
+            _tmpText.text = currentText;
+
+            // 文字が増えた瞬間だけ音を鳴らす
+            if (text.Length > previousLength)
+            {
+                if (_MessageSourco != null && _MessageSE != null)
+                {
+                    Debug.Log("音を鳴らすタイミング！");
+                    _MessageSourco.PlayOneShot(_MessageSE);
+                }
+
+                previousLength = text.Length;
+            }
+        });
         return;
     }
 }
