@@ -109,6 +109,8 @@ public class RendaGameManager : MonoBehaviour
 
         await UniTask.Delay(System.TimeSpan.FromSeconds(1), cancellationToken: destroyCancellationToken);
 
+        _uiManager.HideBubbleEffect();
+
         await StartRendaGameSequence();
     }
 

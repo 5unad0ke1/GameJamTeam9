@@ -7,13 +7,13 @@ using UnityEngine.UI;
 
 public class RendaUIManager : MonoBehaviour
 {
+    [SerializeField] private RapidFireChallenge _rapidFireChallenge;
+
+
+
     [SerializeField, Tooltip("連打システム")]
     private RendaController _rendaController;
 
-    [SerializeField, Tooltip("プレイヤーのImage")]
-    private RectTransform _playerImageTransform;
-    [SerializeField, Tooltip("相手のImage")]
-    private RectTransform _oppImageTransform;
 
     [SerializeField, Tooltip("メッセージウィンドウ")]
     private Image _imgSmashKeyboard;
@@ -74,12 +74,19 @@ public class RendaUIManager : MonoBehaviour
     private MotionHandle _textAnimationHandle;
     private MotionHandle _fadeHandle;
 
+    private void Start()
+    {
+        _uiRendaPanel.SetActive(false);
+    }
     private void Update()
     {
         if (_imgSmashKeyboard.gameObject.activeInHierarchy)
         {
             ZoomOutImgSmashKeyboard();
         }
+
+
+        _rapidFireChallenge.Range = (_rendaController.VsValue / _rendaController.VsValueMax) * 2 - 1;
     }
 
     private void OnDestroy()
@@ -99,6 +106,7 @@ public class RendaUIManager : MonoBehaviour
         _playerAssertionHandle.TryCancel();
         _playerAssertion.SetActive(true);
         _playerAssertion.gameObject.transform.localScale = Vector3.zero;
+        _playerAssertion.gameObject.SetActive(true);
 
         Vector3 playerAssertionScale = _playerAssertion.gameObject.transform.localScale;
         var handle = LMotion.Create(playerAssertionScale, Vector3.one, _playerAssertionDuration)
@@ -132,6 +140,7 @@ public class RendaUIManager : MonoBehaviour
             })
             .AddTo(this);
     }
+    public void HideBubbleEffect() => _playerAssertion.SetActive(false);
 
     public void HideRendaGameStartEffect() => _rendaGameStartUI.SetActive(false);
 
@@ -173,8 +182,7 @@ public class RendaUIManager : MonoBehaviour
     /// </summary>
     public void UpdateImageScale()
     {
-        _playerImageTransform.localScale = Vector3.one * GetPlayerImageScale();
-        _oppImageTransform.localScale = Vector3.one * GetOppImageScale();
+        return;
     }
 
     /// <summary>
@@ -213,26 +221,6 @@ public class RendaUIManager : MonoBehaviour
         {
             _imgSmashKeyboard.rectTransform.localScale *= _imgSmashZoomOutScale;
         }
-    }
-
-    /// <summary>
-    /// プレイヤー画像の拡大率を取得
-    /// </summary>
-    /// <returns></returns>
-    private float GetPlayerImageScale()
-    {
-        float scaleValue = _rendaController.VsValue / _rendaController.VsValueMax;
-        return _playerScaleMin + (_playerScaleMax - _playerScaleMin) * scaleValue;
-    }
-
-    /// <summary>
-    /// 相手の画像の拡大率を取得
-    /// </summary>
-    /// <returns></returns>
-    private float GetOppImageScale()
-    {
-        float scaleValue = _rendaController.VsValue / _rendaController.VsValueMax;
-        return _oppScaleMax - (_oppScaleMax - _oppScaleMin) * scaleValue;
     }
 }
 
