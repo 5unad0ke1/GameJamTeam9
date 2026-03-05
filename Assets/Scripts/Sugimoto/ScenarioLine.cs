@@ -23,5 +23,9 @@ public enum ActionType
     Potatoes,
     //ケチャップをつけるとき
     ketchup,
+    // 何を馬鹿なことを！のとき
+    Choice,
+    // できるだけ多くのキーを連打するとき
+    KeySmash,
 }
 

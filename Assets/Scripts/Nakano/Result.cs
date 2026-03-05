@@ -1,12 +1,13 @@
+using Cysharp.Threading.Tasks;
 using LitMotion;
-using LitMotion.Adapters;
-using LitMotion.Extensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Result : MonoBehaviour
 {
+    [SerializeField] private ResultUIManager _uiManager;
+
     [Header("リザルト時に表示するImage")]
     [SerializeField] Image[] _resultImage;
     [SerializeField] private TMP_Text _tmpText;
@@ -14,65 +15,72 @@ public class Result : MonoBehaviour
     [SerializeField] float _gameOverMessageSpeed = 1f;
     [SerializeField] Text _resultText;
 
-    [Header("スコア表示のText")]
-    [SerializeField] Text _selectText;
-    [SerializeField] Text _timeText;
-    [SerializeField] Text _tapCountText;
-    [SerializeField] Text _tapSpeedText;
+    [Header("スコア表示のText (MeshPro用)")]
+    [SerializeField] TMP_Text _scoreTmpText;
+    [SerializeField] TMP_Text _rankTmpText;
+    [SerializeField] TMP_Text _tapCountTmpText;
+    [SerializeField] TMP_Text _tapSpeedTmpText;
+
+    [Header("リザルトメッセージで流す効果音")]
+    [SerializeField] AudioSource _MessageSourco;
+    [SerializeField] AudioClip _MessageSE;
 
     [Header("確認用の仮データを入れる所")]
     [SerializeField] bool _useDebugData = true;
     [SerializeField] bool _debugData = true;
-    [SerializeField] int _debugSelectData = 2;
-    [SerializeField] float _debugTimeData = 0f;
+    [SerializeField] float _debugScoreData = 2;
+    [SerializeField] string _debugRankData = "A";
     [SerializeField] float _debugTapData = 10;
     [SerializeField] float _debugTapSpeedData = 100;
 
-   
+
 
     void Start()
     {
-        ShowResult();
+        ShowResult().Forget();
     }
 
-    void ShowResult()
+    private async UniTask ShowResult()
     {
-
         bool _isClear; //クリアしたかのフラグ
-        int _selected; //選択したもの
-        float _time; //経過時間
+        float _score; //スコア
+        string _rank; //スコアのランク
         float _tapCount; //連打数
         float _tapSpeed; //連打速度
+
 
         if (_useDebugData)
         {
             _isClear = _debugData;
-            _selected = _debugSelectData;
-            _time = _debugTimeData;
+            _score = _debugScoreData;
+            _rank = _debugRankData;
             _tapCount = _debugTapData;
             _tapSpeed = _debugTapSpeedData;
         }
         else
         {
-            // 将来ここに本番データ取得を書く
-            _isClear = false;
-            _selected = 0;
-            _time = 0;
-            _tapCount = 0;
-            _tapSpeed = 0;
+            _isClear = ResultData.IsClear;
+            _score = ResultData.Score;
+            _rank = ResultData.Rank;
+            _tapCount = ResultData.TapCount;
+            _tapSpeed = ResultData.TapSpeed;
         }
 
-       
+        _uiManager.ShowResultImage(_isClear);
+
+        await _uiManager.PlayFadeOutAsync();
+        _uiManager.SetScoreTexts(_score, _rank, _tapCount, _tapSpeed);
+
         string message = _isClear ? "完全押付" : "妥協";
 
         //アニメーション再生
         if (_isClear)
         {
-            ClearAnimText(message);
+            _uiManager.PlayClearMessageAnim(message);
         }
         else
         {
-            GameOverAnimText(message);
+            _uiManager.PlayGameOverMessageAnim(message);
         }
 
 
@@ -100,14 +108,16 @@ public class Result : MonoBehaviour
             Debug.Log("Result Image 未設定（デバッグモード動作中）");
         }
 
-        _selectText.text = "セレクト:" + _selected;
-        _timeText.text = "タイム:" + _time;
-        _tapCountText.text = "連打数:" + _tapCount;
-        _tapSpeedText.text ="連打速度" + _tapSpeed;
+        _scoreTmpText.text = "スコア:" + _score;
+        _rankTmpText.text = "ランク:" + _rank;
+        _tapCountTmpText.text = "連打数:" + _tapCount;
+        _tapSpeedTmpText.text = "連打速度" + _tapSpeed;
+
+        _uiManager.PlayReultAnim();
 
 
-        Debug.Log($"セレクト: {_selected}");
-        Debug.Log($"タイム: {_time}");
+        Debug.Log($"スコア: {_score}");
+        Debug.Log($"ランク: {_rank}");
         Debug.Log($"連打数: {_tapCount}");
     }
 
@@ -117,9 +127,22 @@ public class Result : MonoBehaviour
         _resultText.alignment = TextAnchor.MiddleLeft;
         _tmpText.alignment = TextAlignmentOptions.Left;
         int _length = message.Length;
-
+        int previousLength = 0;
+        //LMotion.String.Create64Bytes(string.Empty, message, _clearMessageSpeed)
+        //    .BindToText(_tmpText);
         LMotion.String.Create64Bytes(string.Empty, message, _clearMessageSpeed)
-            .BindToText(_tmpText);
+       .Bind(text =>
+       {
+           int currentLength = text.Length;
+
+           if (currentLength > previousLength)
+           {
+               _MessageSourco.PlayOneShot(_MessageSE);
+               previousLength = currentLength;
+           }
+
+           _tmpText.text = text.ToString();
+       });
         return;
     }
 
@@ -128,9 +151,23 @@ public class Result : MonoBehaviour
         _resultText.text = "";
         _tmpText.alignment = TextAlignmentOptions.Center;
         int _length = message.Length;
+        int previousLength = 0;
 
+        //LMotion.String.Create64Bytes(string.Empty, message, _gameOverMessageSpeed)
+        //    .BindToText(_tmpText);
         LMotion.String.Create64Bytes(string.Empty, message, _gameOverMessageSpeed)
-            .BindToText(_tmpText);
+        .Bind(text =>
+        {
+            int currentLength = text.Length;
+
+            if (currentLength > previousLength)
+            {
+                _MessageSourco.PlayOneShot(_MessageSE);
+                previousLength = currentLength;
+            }
+
+            _tmpText.text = text.ToString();
+        });
         return;
     }
 }

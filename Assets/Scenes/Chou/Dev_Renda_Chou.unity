@@ -1109,6 +1109,8 @@ MonoBehaviour:
   _playerScaleMax: 1.3
   _oppScaleMin: 0.3
   _oppScaleMax: 1.3
+  _imgSmashPulseScale: 1.3
+  _imgSmashZoomOutScale: 0.8
 --- !u!4 &792614542
 Transform:
   m_ObjectHideFlags: 0
@@ -1748,7 +1750,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1452458905
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2344,6 +2346,14 @@ PrefabInstance:
     - target: {fileID: 7502467115758846421, guid: c122a18b54afeb34588148b0b2a5c686, type: 3}
       propertyPath: m_Name
       value: RendaSystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 7926380420565982507, guid: c122a18b54afeb34588148b0b2a5c686, type: 3}
+      propertyPath: _smashWindow
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7926380420565982507, guid: c122a18b54afeb34588148b0b2a5c686, type: 3}
+      propertyPath: _smashCountForMaxScale
+      value: 300
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
