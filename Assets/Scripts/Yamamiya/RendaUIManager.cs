@@ -40,7 +40,7 @@ public class RendaUIManager : MonoBehaviour
     [SerializeField, Tooltip("キーボード叩き倍率")]
     private TextMeshProUGUI _uiSmashRateText;
     [SerializeField, Tooltip("選択肢で選択した物")]
-    private TextMeshProUGUI _uiSelectedNameText;
+    private TextMeshProUGUI[] _uiSelectedNameText;
     [SerializeField, Tooltip("連打ゲーム開始のテキスト")]
     private TextMeshProUGUI _gameStartEffectText;
 
@@ -200,7 +200,10 @@ public class RendaUIManager : MonoBehaviour
     /// <param name="name"></param>
     public void UpdateSelectedName(string name)
     {
-        _uiSelectedNameText.text = $" どう考えても\n{name} だろうがーー！";
+        foreach (var item in _uiSelectedNameText)
+        {
+            item.text = $" どう考えても\n{name} だろうがーー！";
+        }
     }
 
     /// <summary>
