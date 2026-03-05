@@ -1,11 +1,13 @@
+using Cysharp.Threading.Tasks;
 using LitMotion;
-using LitMotion.Extensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Result : MonoBehaviour
 {
+    [SerializeField] private ResultUIManager _uiManager;
+
     [Header("リザルト時に表示するImage")]
     [SerializeField] Image[] _resultImage;
     [SerializeField] private TMP_Text _tmpText;
@@ -31,21 +33,21 @@ public class Result : MonoBehaviour
     [SerializeField] float _debugTapData = 10;
     [SerializeField] float _debugTapSpeedData = 100;
 
-   
+
 
     void Start()
     {
-        ShowResult();
+        ShowResult().Forget();
     }
 
-    void ShowResult()
+    private async UniTask ShowResult()
     {
-
         bool _isClear; //クリアしたかのフラグ
         float _score; //スコア
         string _rank; //スコアのランク
         float _tapCount; //連打数
         float _tapSpeed; //連打速度
+
 
         if (_useDebugData)
         {
@@ -57,25 +59,28 @@ public class Result : MonoBehaviour
         }
         else
         {
-            // 将来ここに本番データ取得を書く
-            _isClear = false;
-            _score = 0;
-            _rank = "A";
-            _tapCount = 0;
-            _tapSpeed = 0;
+            _isClear = ResultData.IsClear;
+            _score = ResultData.Score;
+            _rank = ResultData.Rank;
+            _tapCount = ResultData.TapCount;
+            _tapSpeed = ResultData.TapSpeed;
         }
 
-       
+        _uiManager.ShowResultImage(_isClear);
+
+        await _uiManager.PlayFadeOutAsync();
+        _uiManager.SetScoreTexts(_score, _rank, _tapCount, _tapSpeed);
+
         string message = _isClear ? "完全押付" : "妥協";
 
         //アニメーション再生
         if (_isClear)
         {
-            ClearAnimText(message);
+            _uiManager.PlayClearMessageAnim(message);
         }
         else
         {
-            GameOverAnimText(message);
+            _uiManager.PlayGameOverMessageAnim(message);
         }
 
 
@@ -107,6 +112,8 @@ public class Result : MonoBehaviour
         _rankTmpText.text = "ランク:" + _rank;
         _tapCountTmpText.text = "連打数:" + _tapCount;
         _tapSpeedTmpText.text = "連打速度" + _tapSpeed;
+
+        _uiManager.PlayReultAnim();
 
 
         Debug.Log($"スコア: {_score}");
