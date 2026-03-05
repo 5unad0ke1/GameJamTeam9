@@ -374,7 +374,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7906057493343449495}
   - component: {fileID: 6787853867967595960}
-  - component: {fileID: 2921284705645538584}
   m_Layer: 0
   m_Name: InGame BackGround & Intro
   m_TagString: Untagged
@@ -414,32 +413,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 866033657e1aee74299ff4f8576cfec2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IntroWindowAnimation
-  _scenarioManager: {fileID: 2921284705645538584}
+  _scenarioManager: {fileID: 0}
   _exteriorT: {fileID: 8562707875128806110}
   _exterior: {fileID: 391375637304937625}
   _exteriorZoom: {fileID: 3156660051242666530}
   _fade: {fileID: 7169033933740739051}
   _filterType: 0
---- !u!114 &2921284705645538584
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5455571785151898954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee63672138f8fda4085958df9964618b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SimpleScenarioManager
-  _scenarioLines: []
-  _NameText: {fileID: 0}
-  _lineText: {fileID: 0}
-  _lineImage: {fileID: 0}
-  _textAnimationDuration: 1.5
-  _upperCaseWords: []
-  _ShakeWords: []
-  WaitingTime: 0
 --- !u!1 &5686874484280289779
 GameObject:
   m_ObjectHideFlags: 0

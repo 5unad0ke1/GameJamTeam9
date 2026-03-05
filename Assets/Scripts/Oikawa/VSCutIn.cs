@@ -5,6 +5,10 @@ using UnityEngine;
 
 public sealed class VSCutIn : MonoBehaviour
 {
+    [SerializeField] private SimpleScenarioManager _scenarioManager;
+    [SerializeField] private ActionType _filter;
+
+
     [Tooltip("画面全体揺らすためのTransform")]
     [SerializeField] private Transform _shakeParentT;
 
@@ -45,6 +49,14 @@ public sealed class VSCutIn : MonoBehaviour
     void Awake()
     {
         _shakeParentT.gameObject.SetActive(false);
+
+        _scenarioManager.OnFuncTriggerd.Add(PlayAnimation);
+    }
+    private async UniTask PlayAnimation(ActionType type)
+    {
+        if (type != _filter)
+            return;
+        await PlayAnimation(false);
     }
     private async UniTask PlayAnimation(bool isTest = false)
     {
