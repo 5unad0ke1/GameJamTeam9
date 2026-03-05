@@ -6,8 +6,8 @@ public class ButtonAnimation : MonoBehaviour
 {
     [SerializeField] private RectTransform _rect;
     [SerializeField] private float _animationDuration = 0.2f;
+    [SerializeField] private float _selectScale = 1.5f;
     [SerializeField] private Vector3 _defaultScale = Vector3.one;
-    [SerializeField] private Vector3 _selectScale = new Vector3(1.5f, 1.5f, 1.5f);
     [SerializeField] private Ease _ease = Ease.Linear;
 
     private MotionHandle _currentMotion;
@@ -34,7 +34,8 @@ public class ButtonAnimation : MonoBehaviour
     {
         _currentMotion.TryCancel();
 
-        _currentMotion = LMotion.Create(_rect.localScale, _selectScale, _animationDuration)
+        var selectScale = _rect.localScale * _selectScale;
+        _currentMotion = LMotion.Create(_rect.localScale, selectScale, _animationDuration)
             .WithEase(_ease)
             .BindToLocalScale(_rect);
     }
