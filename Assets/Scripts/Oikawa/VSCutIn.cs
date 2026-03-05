@@ -11,8 +11,6 @@ public sealed class VSCutIn : MonoBehaviour
     [Tooltip("中心線を出すためのSpriteRenderer")]
     [SerializeField] private SpriteRenderer _lighting;
 
-    [Tooltip("中心線を出す際のエフェクト用のSpriteRenderer")]
-    [SerializeField] private SpriteRenderer _whiteout;
 
     [Space]
 
@@ -58,7 +56,6 @@ public sealed class VSCutIn : MonoBehaviour
 
 
         _shakeParentT.gameObject.SetActive(true);
-        _whiteout.enabled = false;
         _lighting.enabled = false;
         _leftCharactor.gameObject.SetActive(false);
         _rightCharactor.gameObject.SetActive(false);
@@ -78,7 +75,6 @@ public sealed class VSCutIn : MonoBehaviour
         _source.Stop();
 
         _source.PlayOneShot(_ironSmashClip);
-        _whiteout.enabled = false;
         _lighting.enabled = true;
 
         _leftCharactor.gameObject.SetActive(true);

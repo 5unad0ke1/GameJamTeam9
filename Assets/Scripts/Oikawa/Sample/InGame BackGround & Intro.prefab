@@ -574,6 +574,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4930118782092346494}
   - component: {fileID: 6451884823244388007}
+  - component: {fileID: 7308860912571085289}
   m_Layer: 0
   m_Name: potato_0
   m_TagString: Untagged
@@ -655,3 +656,17 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &7308860912571085289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9038441512948225218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e8daa80671481c4faf480f5ca581262, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  _scenarioManager: {fileID: 0}
+  _actionType: 0

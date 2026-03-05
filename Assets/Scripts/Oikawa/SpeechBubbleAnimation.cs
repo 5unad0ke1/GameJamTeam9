@@ -8,6 +8,7 @@ public class SpeechBubbleAnimation : MonoBehaviour
     [SerializeField] RectTransform[] _bubbles;
 
     private MotionHandle _handle;
+    private float _timer;
 
     [ContextMenu("TestPlay")]
     public void TestPlay()
@@ -16,8 +17,12 @@ public class SpeechBubbleAnimation : MonoBehaviour
         => Animation(index);
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-            TestPlay();
+        _timer += Time.deltaTime;
+
+        if (_timer < 2.5f)
+            return;
+        _timer = 0;
+        TestPlay();
     }
     private void OnDestroy()
     {
