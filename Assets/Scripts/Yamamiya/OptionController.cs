@@ -121,7 +121,7 @@ public class OptionController : MonoBehaviour
             float elapsedTime = 0f;
             _view.UpdateTimerPrrogress(_timeLimit);
 
-            while(elapsedTime < _timeLimit)
+            while (elapsedTime < _timeLimit)
             {
                 elapsedTime += Time.deltaTime;
                 _view.UpdateTimerPrrogress(_timeLimit - elapsedTime);
@@ -175,9 +175,10 @@ public class OptionController : MonoBehaviour
         }
 
         await UniTask.Delay(System.TimeSpan.FromSeconds(1.5f));
+        OptionClick.ResetSelection();
         ShowOptionPanel();
         ShowOptions();
 
-        await UniTask.WaitUntil(() => OptionClick._selected, cancellationToken: destroyCancellationToken);
+        await UniTask.WaitUntil(() => OptionClick.Selected, cancellationToken: destroyCancellationToken);
     }
 }

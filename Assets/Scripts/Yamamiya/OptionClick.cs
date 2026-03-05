@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 /// <summary>
 /// 選択肢をクリックしたときの処理を担当するクラス。
@@ -21,28 +20,28 @@ public class OptionClick : MonoBehaviour
     [SerializeField, Tooltip("相手の押付力")]
     private float _oppPower;
     [SerializeField, Tooltip("難易度によるスコア倍率")]
-    private float  _diffcultyScoreScale;
+    private float _diffcultyScoreScale;
 
-    public static bool _selected { get; private set; } = false;
+    public static bool Selected { get; private set; } = false;
 
     private void Awake()
     {
-        if(_rendaGameManager == null)
+        if (_rendaGameManager == null)
         {
             Debug.LogError("RendaGameManagerが設定されていません。");
         }
 
-        if(_rendaUIManager == null)
+        if (_rendaUIManager == null)
         {
             Debug.LogError("RendaUIManagerが設定されていません。");
         }
 
-        if(_optionController == null)
+        if (_optionController == null)
         {
             Debug.LogError("OptionControllerが設定されていません。");
         }
 
-        if(_optionText != null)
+        if (_optionText != null)
         {
             _optionText.text = _optionName;
         }
@@ -55,10 +54,14 @@ public class OptionClick : MonoBehaviour
     {
         _optionController.CancelTimeout();
         _optionController.HideOptions();
-        
+
         _rendaGameManager.SetDifficultyParams(_oppPower, _diffcultyScoreScale);
-        _optionController.HideOptions();
         _rendaUIManager.UpdateSelectedName(_optionName);
-        _selected = true;
+        Selected = true;
+    }
+
+    public static void ResetSelection()
+    {
+        Selected = false;
     }
 }
