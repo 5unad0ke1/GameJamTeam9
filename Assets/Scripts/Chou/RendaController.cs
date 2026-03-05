@@ -112,7 +112,7 @@ public class RendaController : MonoBehaviour
     {
         _input.Disable();
         _timerFlg = false;
-        OnRendaEnd.Invoke();
+        OnRendaEnd?.Invoke();
     }
 
     private void Update()
