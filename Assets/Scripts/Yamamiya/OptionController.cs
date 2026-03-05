@@ -6,9 +6,14 @@ using UnityEngine.UI;
 
 public class OptionController : MonoBehaviour
 {
+    [Tooltip("シナリオマネージャー(Action/Funcの登録)")]
+    [SerializeField] private SimpleScenarioManager _scenarioManager;
+
     [SerializeField] private OptionView _view;
     [SerializeField] private int _initialSelectedIndex = 0;
     [SerializeField, Tooltip("選択肢画面の制限時間")] private float _timeLimit = 5f;
+
+    [SerializeField] private ActionType _filterType;
 
 
     private OptionSelector _selector;
@@ -24,6 +29,8 @@ public class OptionController : MonoBehaviour
 
         _selector = new OptionSelector(_view.OptionCount, _initialSelectedIndex);
         _selector.OnSelectionChanged += OnSelectionChanged;
+        _scenarioManager.OnFuncTriggerd.Add(EndSelectedOptions);
+
         _timeOutCts = new CancellationTokenSource();
     }
 
@@ -40,6 +47,8 @@ public class OptionController : MonoBehaviour
         }
         _timeOutCts?.Cancel();
         _timeOutCts?.Dispose();
+
+        _scenarioManager.OnFuncTriggerd.Remove(EndSelectedOptions);
     }
 
     /// <summary>
@@ -109,8 +118,17 @@ public class OptionController : MonoBehaviour
     {
         try
         {
-            await UniTask.Delay(System.TimeSpan.FromSeconds(_timeLimit), cancellationToken: token);
+            float elapsedTime = 0f;
+            _view.UpdateTimerPrrogress(_timeLimit);
 
+            while(elapsedTime < _timeLimit)
+            {
+                elapsedTime += Time.deltaTime;
+                _view.UpdateTimerPrrogress(_timeLimit - elapsedTime);
+                await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken: token);
+            }
+
+            _view.UpdateTimerPrrogress(0f);
             OnTimeout();
         }
         catch (System.OperationCanceledException)
@@ -128,7 +146,7 @@ public class OptionController : MonoBehaviour
         Button randomButton = _view.GetButton(randamIndex);
         Debug.Log(randomButton.name);
 
-        if(randomButton != null)
+        if (randomButton != null)
         {
             randomButton.onClick.Invoke();
         }
@@ -141,5 +159,25 @@ public class OptionController : MonoBehaviour
     {
         _timeOutCts?.Cancel();
         Debug.Log("タイムアウトがキャンセルされました。");
+    }
+
+    /// <summary>
+    /// 選択肢が選ばれるまで待機する処理。
+    /// フィルタリングされているActionTypeと一致するFuncが呼び出されたときのみ待機する。
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    private async UniTask EndSelectedOptions(ActionType type)
+    {
+        if (type != _filterType)
+        {
+            return;
+        }
+
+        await UniTask.Delay(System.TimeSpan.FromSeconds(1.5f));
+        ShowOptionPanel();
+        ShowOptions();
+
+        await UniTask.WaitUntil(() => OptionClick._selected, cancellationToken: destroyCancellationToken);
     }
 }
