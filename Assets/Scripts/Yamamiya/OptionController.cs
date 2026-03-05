@@ -74,17 +74,17 @@ public class OptionController : MonoBehaviour
     /// <summary>
     /// 選択肢画面を表示するメソッド。
     /// </summary>
-    public void ActivateOptionPanel() => _view.ShowPanel();
+    public void ShowOptionPanel() => _view.ShowPanel();
 
     /// <summary>
     /// 選択肢画面を非表示にするメソッド。
     /// </summary>
-    public void DeactivateOptionPanel() => _view.HidePanel();
+    public void HideOptionPanel() => _view.HidePanel();
 
     /// <summary>
     /// 選択肢を表示するメソッド。
     /// </summary>
-    public void ActivateOptions()
+    public void ShowOptions()
     {
         // タイムアウトのキャンセルと新しいタイムアウトの開始
         _timeOutCts?.Cancel();
@@ -100,7 +100,7 @@ public class OptionController : MonoBehaviour
     /// <summary>
     /// 選択肢を非表示にするメソッド。
     /// </summary>
-    public void DeactivateOptions() => _view.HideOptions();
+    public void HideOptions() => _view.HideOptions();
 
     /// <summary>
     /// 選択が変更されたときの処理。
