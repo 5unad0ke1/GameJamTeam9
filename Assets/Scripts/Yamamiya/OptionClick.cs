@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,41 +7,58 @@ using UnityEngine.UI;
 /// </summary>
 public class OptionClick : MonoBehaviour
 {
-    private RendaController _rendaController;
-    private OptionView _optionView;
-
-    [SerializeField] private GameObject _rendaPanel;
+    [SerializeField] private RendaGameManager _rendaGameManager;
+    [SerializeField] private RendaUIManager _rendaUIManager;
+    [SerializeField] private OptionController _optionController;
 
     [Header("選択肢のテキスト")]
-    [SerializeField] private Text _optionText;
+    [SerializeField] private TextMeshProUGUI _optionText;
 
     [Header("選択肢の名前")]
     [SerializeField] private string _optionName;
+
     [Header("連打の難易度を変更する値")]
-    [SerializeField, Min(0f)] private float _value;
+    [SerializeField, Tooltip("相手の押付力")]
+    private float _oppPower;
+    [SerializeField, Tooltip("難易度によるスコア倍率")]
+    private float  _diffcultyScoreScale;
+
+    public static bool _selected { get; private set; } = false;
 
     private void Awake()
     {
-        if(_rendaController == null)
+        if(_rendaGameManager == null)
         {
-            _rendaController = FindAnyObjectByType<RendaController>();
-        }
-        if(_optionView == null)
-        {
-            _optionView = FindAnyObjectByType<OptionView>();
+            Debug.LogError("RendaGameManagerが設定されていません。");
         }
 
-        _optionText.text = _optionName;
+        if(_rendaUIManager == null)
+        {
+            Debug.LogError("RendaUIManagerが設定されていません。");
+        }
+
+        if(_optionController == null)
+        {
+            Debug.LogError("OptionControllerが設定されていません。");
+        }
+
+        if(_optionText != null)
+        {
+            _optionText.text = _optionName;
+        }
     }
 
     /// <summary>
-    /// 連打ゲームに移行する。
+    /// 選択肢画面を終了する。
     /// </summary>
     public void OnClick()
     {
-        _optionView.HideOptions();
-        _optionView.HidePanel();
-        _rendaPanel.SetActive(true);
-        _rendaController.RendaStart();
+        _optionController.CancelTimeout();
+        _optionController.HideOptions();
+        
+        _rendaGameManager.SetDifficultyParams(_oppPower, _diffcultyScoreScale);
+        _optionController.HideOptions();
+        _rendaUIManager.UpdateSelectedName(_optionName);
+        _selected = true;
     }
 }

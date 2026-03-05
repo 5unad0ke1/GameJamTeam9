@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,8 @@ public class OptionView : MonoBehaviour
 {
     [SerializeField] private GameObject _optionPanel;
     [SerializeField] private Button[] _options;
+    [Header("タイマー表示")]
+    [SerializeField] private TextMeshProUGUI _timerText;
 
     public int OptionCount => _options?.Length ?? 0;
 
@@ -66,7 +69,10 @@ public class OptionView : MonoBehaviour
         {
             _options[i].gameObject.SetActive(false);
         }
+        HideTimerText();
     }
+
+    public void HideTimerText() => _timerText.gameObject.SetActive(false);
 
     /// <summary>
     /// 指定されたインデックスのボタンを選択状態にします。
@@ -100,5 +106,30 @@ public class OptionView : MonoBehaviour
         {
             animation.OnDeselect();
         }
+    }
+
+    /// <summary>
+    /// 指定されたインデックスのボタンを取得します。
+    /// </summary>
+    /// <param name="index"></param>
+    /// <returns>Indexが範囲外の場合はnullを返します。</returns>
+    public Button GetButton(int index)
+    {
+        if (_options == null || index < 0 || index >= _options.Length)
+        {
+            return null;
+        }
+        return _options[index];
+    }
+
+    /// <summary>
+    /// 選択肢画面の制限時間の表示を更新します。
+    /// </summary>
+    /// <param name="value"></param>
+    public void UpdateTimerPrrogress(float value)
+    {
+        if (_timerText == null) return;
+
+        _timerText.text = value.ToString("0");
     }
 }
