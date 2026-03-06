@@ -113,7 +113,7 @@ public class Result : MonoBehaviour
         _tapCountTmpText.text = "連打数:" + _tapCount;
         _tapSpeedTmpText.text = "連打速度" + _tapSpeed;
 
-        _uiManager.PlayReultAnim();
+        _uiManager.PlayResultAnim();
 
 
         Debug.Log($"スコア: {_score}");
