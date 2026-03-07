@@ -30,6 +30,22 @@ public class SpeechBubbleAnimation : MonoBehaviour
     }
     private void Animation(int index, bool isTest = false)
     {
+        if (_bubbles == null)
+        {
+            Debug.LogWarning("SpeechBubbleAnimation: `_bubbles` is null.", this);
+            return;
+        }
+        if (index < 0 || index >= _bubbles.Length)
+        {
+            Debug.LogWarning($"SpeechBubbleAnimation: index {index} is out of range (length {_bubbles.Length}).", this);
+            return;
+        }
+        if (_bubbles[index] == null)
+        {
+            Debug.LogWarning($"SpeechBubbleAnimation: `_bubbles[{index}]` is null.", this);
+            return;
+        }
+
         _handle.TryComplete();
 
         foreach (var item in _bubbles)
