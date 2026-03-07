@@ -1063,7 +1063,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChangeScene
   _titleScene: Title
-  _countdownTime: 3
+  _countdownTime: 1
 --- !u!4 &1438303823
 Transform:
   m_ObjectHideFlags: 0
