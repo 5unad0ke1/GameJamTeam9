@@ -42,7 +42,7 @@ public class ScoreRankingManager : MonoBehaviour
         {
             _records[_recordCountMax - 1].SetScore(score);
             _records[_recordCountMax - 1].SetNewFlg(true);
-            _records.Sort((a, b) => a.Score > b.Score ? -1 : 1);
+            _records.Sort((a, b) => b.Score.CompareTo(a.Score));
         }
     }
 
