@@ -105,8 +105,7 @@ public class RendaUIManager : MonoBehaviour
     {
         _playerAssertionHandle.TryCancel();
         _playerAssertion.SetActive(true);
-        _playerAssertion.gameObject.transform.localScale = Vector3.zero;
-        _playerAssertion.gameObject.SetActive(true);
+        _playerAssertion.transform.localScale = Vector3.zero;
 
         Vector3 playerAssertionScale = _playerAssertion.gameObject.transform.localScale;
         var handle = LMotion.Create(playerAssertionScale, Vector3.one, _playerAssertionDuration)
@@ -175,14 +174,6 @@ public class RendaUIManager : MonoBehaviour
     public void UpdateScore()
     {
         _scoreText.text = _rendaController.Score.ToString("0");
-    }
-
-    /// <summary>
-    /// プレイヤーと相手の画像の拡大率を更新
-    /// </summary>
-    public void UpdateImageScale()
-    {
-        return;
     }
 
     /// <summary>

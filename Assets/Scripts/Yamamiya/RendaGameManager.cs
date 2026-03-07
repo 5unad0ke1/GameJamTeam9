@@ -55,7 +55,6 @@ public class RendaGameManager : MonoBehaviour
     {
         // スタートしていないときは更新処理を行わない
         if (!_started) return;
-        _uiManager.UpdateImageScale();
         _uiManager.UpdateUiTimer();
     }
 
