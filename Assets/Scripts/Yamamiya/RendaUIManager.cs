@@ -191,8 +191,15 @@ public class RendaUIManager : MonoBehaviour
     /// <param name="name"></param>
     public void UpdateSelectedName(string name)
     {
+        if (_uiSelectedNameText == null || _uiSelectedNameText.Length == 0)
+        {
+            return;
+        }
+
         foreach (var item in _uiSelectedNameText)
         {
+            if (item == null)
+                continue;
             item.text = $" どう考えても\n{name} だろうがーー！";
         }
     }
