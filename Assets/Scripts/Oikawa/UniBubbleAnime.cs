@@ -8,6 +8,21 @@ public sealed class UniBubbleAnime : MonoBehaviour
 
     private MotionHandle _handle;
     private float _timer;
+    private void Awake()
+    {
+        if (_transforms == null || _transforms.Length == 0)
+        {
+            Debug.LogError("[UniBubbleAnime] _transforms が未設定です。", this);
+            enabled = false;
+            return;
+        }
+
+        if (System.Array.Exists(_transforms, item => item == null))
+        {
+            Debug.LogError("[UniBubbleAnime] _transforms に null 要素があります。", this);
+            enabled = false;
+        }
+    }
     void Start()
     {
         _timer = 0;
