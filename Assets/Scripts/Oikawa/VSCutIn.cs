@@ -34,6 +34,8 @@ public sealed class VSCutIn : MonoBehaviour
     [SerializeField] private AudioClip _slideClip;
     [SerializeField] private AudioClip _ironSmashClip;
 
+    private bool _isRegistered;
+
     public async UniTask PlayAnimationAsync()
     {
         await PlayAnimation(false);
@@ -46,11 +48,29 @@ public sealed class VSCutIn : MonoBehaviour
         => PlayAnimation(true).Forget();
 
     [ContextMenu("Init")]
-    void Awake()
+    private void Initialize()
     {
         _shakeParentT.gameObject.SetActive(false);
 
+        if (_scenarioManager == null)
+        {
+            Debug.LogError("シナリオマネージャーが未登録です。", this);
+            return;
+        }
+        if (_isRegistered)
+            return;
+
         _scenarioManager.OnFuncTriggerd.Add(PlayAnimation);
+        _isRegistered = true;
+    }
+    private void Awake()
+    {
+        Initialize();
+    }
+    private void OnDestroy()
+    {
+        if (_isRegistered && _scenarioManager != null)
+            _scenarioManager.OnFuncTriggerd.Remove(PlayAnimation);
     }
     private async UniTask PlayAnimation(ActionType type)
     {
