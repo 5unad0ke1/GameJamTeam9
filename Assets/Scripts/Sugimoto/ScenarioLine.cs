@@ -11,6 +11,7 @@ public class ScenarioLine
     public ActionType actionType;
     public bool isActionExecuted;
     public bool isFuncExecuted;
+    public bool isNeedPush = true;
 }
 
 public enum ActionType
@@ -27,5 +28,9 @@ public enum ActionType
     Choice,
     // できるだけ多くのキーを連打するとき
     KeySmash,
+    //ポテト登場
+    ShowPotatoes,
+
+    PlayerAngry,
 }
 

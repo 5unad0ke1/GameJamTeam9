@@ -27,6 +27,7 @@ public class SimpleScenarioManager : MonoBehaviour
     private int _currentLineIndex = 0;
     private bool _isAnimatingText = false;
     private bool _isCanSkip = false;
+    private bool _isNeedInput = false;
     private MotionHandle _textAnimationHandler;
     private MotionHandle _shakeHandle;
     private Vector3[][] _originalVertices;
@@ -35,7 +36,7 @@ public class SimpleScenarioManager : MonoBehaviour
 
     //セリフのアクション
     public Action<ActionType> OnActionTriggered;
-    public List<Func<ActionType, UniTask>> OnFuncTriggerd;
+    public List<Func<ActionType, UniTask>> OnFuncTriggerd = new();
 
 
     private void Start()
@@ -52,11 +53,16 @@ public class SimpleScenarioManager : MonoBehaviour
             StartShake();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (!_isNeedInput)
+        {
+            if (!_isAnimatingText && _isCanSkip)
+                NextLine();
+        }
+        else if (Input.GetKeyDown(KeyCode.Space) && _isCanSkip)
         {
             if (_isAnimatingText)
                 SkipTextAnimation();
-            else if (_isCanSkip)
+            else
                 NextLine();
         }
     }
@@ -72,7 +78,7 @@ public class SimpleScenarioManager : MonoBehaviour
         foreach (var word in _upperCaseWords)
             text = text.Replace(word, word.ToUpper());
 
-
+        _isNeedInput = _scenarioLines[_currentLineIndex].isNeedPush;
 
         TextAnimation(text, _scenarioLines[_currentLineIndex].isActionExecuted, _scenarioLines[_currentLineIndex].isFuncExecuted).Forget();
     }
@@ -93,6 +99,7 @@ public class SimpleScenarioManager : MonoBehaviour
 
         // テキストアニメーションを作成して、テキストにバインドする
         _textAnimationHandler = LMotion.String.Create128Bytes(_lineText.text, text, _textAnimationDuration)
+            .WithRichText()
             .WithEase(Ease.Linear)
             .BindToText(_lineText)
             .AddTo(this);

@@ -60,6 +60,7 @@ public class ResultUIManager : MonoBehaviour
     {
         _messageHandle.TryCancel();
         _fadeHandle.TryCancel();
+        _resultHandle.TryCancel();
     }
 
     /// <summary>

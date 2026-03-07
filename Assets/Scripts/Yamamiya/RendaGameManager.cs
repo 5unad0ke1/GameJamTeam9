@@ -55,7 +55,6 @@ public class RendaGameManager : MonoBehaviour
     {
         // スタートしていないときは更新処理を行わない
         if (!_started) return;
-        _uiManager.UpdateImageScale();
         _uiManager.UpdateUiTimer();
     }
 
@@ -108,6 +107,8 @@ public class RendaGameManager : MonoBehaviour
         await _uiManager.ShowPlayerAssertion();
 
         await UniTask.Delay(System.TimeSpan.FromSeconds(1), cancellationToken: destroyCancellationToken);
+
+        _uiManager.HideBubbleEffect();
 
         await StartRendaGameSequence();
     }
