@@ -76,7 +76,14 @@ public sealed class VSCutIn : MonoBehaviour
     {
         if (type != _filter)
             return;
-        await PlayAnimation(false);
+        try
+        {
+            await PlayAnimation(false);
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogException(ex, this);
+        }
     }
     private async UniTask PlayAnimation(bool isTest = false)
     {
