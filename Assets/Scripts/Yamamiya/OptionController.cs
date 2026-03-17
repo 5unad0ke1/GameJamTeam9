@@ -143,12 +143,15 @@ public class OptionController : MonoBehaviour
     private void OnTimeout()
     {
         Button selectedButton = _view.GetButton(_selector.SelectedIndex);
-        Debug.Log(selectedButton.name);
 
-        if (selectedButton != null)
+        if(selectedButton == null)
         {
-            selectedButton.onClick?.Invoke();
+            Debug.LogWarning($"選択されたボタンが見つかりませんでした。{_selector.SelectedIndex}");
+            return;
         }
+
+        Debug.Log(selectedButton.name);
+        selectedButton.onClick?.Invoke();
     }
 
     /// <summary>
