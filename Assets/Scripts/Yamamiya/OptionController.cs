@@ -138,18 +138,20 @@ public class OptionController : MonoBehaviour
     }
 
     /// <summary>
-    /// タイムアウトしたときにランダムなボタンのクリックイベントを発火させる。
+    /// タイムアウトしたときに選択中のボタンのクリックイベントを発火させる。
     /// </summary>
     private void OnTimeout()
     {
-        int randamIndex = Random.Range(0, _view.OptionCount);
-        Button randomButton = _view.GetButton(randamIndex);
-        Debug.Log(randomButton.name);
+        Button selectedButton = _view.GetButton(_selector.SelectedIndex);
 
-        if (randomButton != null)
+        if(selectedButton == null)
         {
-            randomButton.onClick.Invoke();
+            Debug.LogWarning($"選択されたボタンが見つかりませんでした。{_selector.SelectedIndex}");
+            return;
         }
+
+        Debug.Log(selectedButton.name);
+        selectedButton.onClick?.Invoke();
     }
 
     /// <summary>

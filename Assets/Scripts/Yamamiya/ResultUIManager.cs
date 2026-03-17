@@ -101,7 +101,7 @@ public class ResultUIManager : MonoBehaviour
     /// <summary>
     /// リザルトレシートの表示アニメーションを再生します。
     /// </summary>
-    public void PlayReultAnim()
+    public void PlayResultAnim()
     {
         _resultHandle.TryCancel();
         _resultRect.gameObject.SetActive(true);
