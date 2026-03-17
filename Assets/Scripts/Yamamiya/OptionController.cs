@@ -142,12 +142,12 @@ public class OptionController : MonoBehaviour
     /// </summary>
     private void OnTimeout()
     {
-        Button randomButton = _view.GetButton(_selector.SelectedIndex);
-        Debug.Log(randomButton.name);
+        Button selectedButton = _view.GetButton(_selector.SelectedIndex);
+        Debug.Log(selectedButton.name);
 
-        if (randomButton != null)
+        if (selectedButton != null)
         {
-            randomButton.onClick.Invoke();
+            selectedButton.onClick?.Invoke();
         }
     }
 
