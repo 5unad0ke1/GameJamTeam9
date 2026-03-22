@@ -36,6 +36,7 @@ public sealed class BGMManager : MonoBehaviour
     }
     private void OnDestroy()
     {
+        _scenarioManager.OnActionTriggered -= BGMUpdate;
         _handle.TryCancel();
     }
     private void BGMUpdate(ActionType filter)
