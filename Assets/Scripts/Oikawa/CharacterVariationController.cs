@@ -17,6 +17,8 @@ public sealed class CharacterVariationController : MonoBehaviour
     [Tooltip("差分変更時のバウンドのアニメーション(null可能 TryGetComponent実装済み)")]
     [SerializeField] private BoundAnimation _animation;
 
+    private int _previousIndex;
+
     [ContextMenu("TestVariation")]
     public void TestPlayVariation()
     {
@@ -47,6 +49,8 @@ public sealed class CharacterVariationController : MonoBehaviour
             {
                 Debug.Log($"{nameof(CharacterVariationController)}の_animationが自動注入されました", this);
             }
+
+        _previousIndex = -1;
     }
 
     void Start()
@@ -56,6 +60,10 @@ public sealed class CharacterVariationController : MonoBehaviour
 
     private void ChangeVariation(int index)
     {
+        if (_previousIndex == index)
+            return;
+        _previousIndex = index;
+
         foreach (var item in _spriteGameObjects)
         {
             item.SetActive(false);
