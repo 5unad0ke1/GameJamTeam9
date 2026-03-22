@@ -19,9 +19,10 @@ public sealed class BGMManager : MonoBehaviour
 
     private void Start()
     {
-        if (_scenarioManager == null)
+        if (_scenarioManager == null || _cicadaSource == null || _rastaurantSource == null || _specialToMeSource == null || _actionSource == null)
         {
-            Debug.LogError($"{nameof(SimpleScenarioManager)}がNullです", this);
+            Debug.LogError("BGMManager の参照が不足しています。Inspector 設定を確認してください。", this);
+            enabled = false;
             return;
         }
 
