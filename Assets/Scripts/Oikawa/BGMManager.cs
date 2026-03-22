@@ -77,5 +77,6 @@ public sealed class BGMManager : MonoBehaviour
         _cicadaSource.volume = 0f;
         _rastaurantSource.volume = 0f;
         _specialToMeSource.volume = 0f;
+        _actionSource.volume = 0f;
     }
 }
