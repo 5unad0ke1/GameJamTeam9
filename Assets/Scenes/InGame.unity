@@ -3347,7 +3347,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6739789184653413086, guid: 8ec7b485ada5d5d45b8ce09e014ad221, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7560456402234697305, guid: 8ec7b485ada5d5d45b8ce09e014ad221, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4732,7 +4732,7 @@ MonoBehaviour:
     lineImage: {fileID: 0}
     Face: {fileID: 0}
     actionType: 4
-    isActionExecuted: 0
+    isActionExecuted: 1
     isFuncExecuted: 1
     isNeedPush: 0
   - characterName: 
@@ -4751,6 +4751,8 @@ MonoBehaviour:
   _ShakeWords:
   - "<color=#FF9900>\u30B1\u30C1\u30E3\u30C3\u30D7</color>"
   - "\u30DD\u30C6\u30C8\u306F\u2015\u2015"
+  _panelDisableFilter: 4
+  _scenarioPanel: {fileID: 739458159}
   WaitingTime: 0
 --- !u!4 &2042150425
 Transform:
@@ -4805,7 +4807,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8177659907758474076, guid: 14f5cef40602a3b46aad2f2f9b838056, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8394993294666217825, guid: 14f5cef40602a3b46aad2f2f9b838056, type: 3}
       propertyPath: m_LocalPosition.x
