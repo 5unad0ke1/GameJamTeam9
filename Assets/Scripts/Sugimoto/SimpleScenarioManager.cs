@@ -44,6 +44,12 @@ public class SimpleScenarioManager : MonoBehaviour
 
     private void Start()
     {
+        if (_scenarioPanel == null)
+        {
+            Debug.LogError("SimpleScenarioManager: _scenarioPanel is not assigned.", this);
+            enabled = false;
+            return;
+        }
         ShowLine();
 
         _scenarioPanel.SetActive(true);
