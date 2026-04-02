@@ -20,6 +20,9 @@ public class SimpleScenarioManager : MonoBehaviour
     [SerializeField, Tooltip("大文字にする文字のキーワード")] private string[] _upperCaseWords;
     [SerializeField, Tooltip("揺らす文字を入れる配列")] private string[] _ShakeWords;
 
+    [SerializeField] private ActionType _panelDisableFilter;
+    [SerializeField] private GameObject _scenarioPanel;
+
     [Header("アクションの設定")]
     [Min(1)]
     [SerializeField] private int WaitingTime;
@@ -41,8 +44,22 @@ public class SimpleScenarioManager : MonoBehaviour
 
     private void Start()
     {
+        if (_scenarioPanel == null)
+        {
+            Debug.LogError("SimpleScenarioManager: _scenarioPanel is not assigned.", this);
+            enabled = false;
+            return;
+        }
         ShowLine();
 
+        _scenarioPanel.SetActive(true);
+        OnActionTriggered += actionType =>
+        {
+            if (actionType == _panelDisableFilter)
+            {
+                _scenarioPanel.SetActive(false);
+            }
+        };
     }
 
     private void Update()
@@ -69,7 +86,10 @@ public class SimpleScenarioManager : MonoBehaviour
 
     public void ShowLine()
     {
-        if (_currentLineIndex >= _scenarioLines.Length) return;
+        if (_currentLineIndex >= _scenarioLines.Length)
+        {
+            return;
+        }
 
         _NameText.text = _scenarioLines[_currentLineIndex].characterName;
 
